@@ -1,0 +1,8 @@
+
+
+export const ADD_NEW_MODEL = "ADD_NEW_MODEL"
+export const EDIT_MODEL = "EDIT_MODEL"
+export const DELETE_MODEL = "DELETE_MODEL"
+
+export const SET_MODELS_ERROR = "SET_MODELS_ERROR"
+export const SET_MODELS_LOADING = "SET_MODELS_LOADING"
