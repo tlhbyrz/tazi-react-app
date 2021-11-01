@@ -11,11 +11,11 @@ function Header() {
                 </Link>
                 <nav className="header-nav">
                     <ul>
-                        <li>
-                            <Link to="/models" className="nav-link">Models</Link>
+                        <li className="nav-link">
+                            <Link to="/models" >Models</Link>
                         </li>
-                        <li>
-                            <Link to="/add" className="nav-link action-btn">Add New Model</Link>
+                        <li className="nav-link action-btn">
+                            <Link to="/add">Add New Model</Link>
                         </li>
                     </ul>
                 </nav>

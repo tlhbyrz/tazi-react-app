@@ -10,6 +10,9 @@
   --dark-bg: #11111E;
   --font-color: #fff;
   --app-bg: #FAFCFD;
+  --action-btn-bg: #131397;
+  --action-btn-hover-bg: #050597;
+  --max-width: 900px;
 }
 
 body {

@@ -1,0 +1,15 @@
+
+.page-header{
+    margin-top: 80px;
+    font-size: 30px;
+    color: var(--dark-bg);
+    font-family: "Mulish";
+    font-weight: bold;
+}
+
+.bottom-line{
+    height: 2px;
+    background: var(--dark-bg);
+    border-radius: 4px;
+    margin: 5px 0 50px;
+}
