@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import PageHeader from 'components/PageHeader/PageHeader'
-import { Select, FormControl, FormLabel } from "@chakra-ui/react"
+import { Select, FormControl, FormLabel, Box } from "@chakra-ui/react"
 import ConfigModelOne from 'components/ConfigModels/ConfigModelOne'
+import ConfigModelTwo from 'components/ConfigModels/ConfigModelTwo'
+import Alert from 'components/Alert'
 
 const AddModel = () => {
     const [configType, setConfigType] = useState("type1")
@@ -13,6 +15,10 @@ const AddModel = () => {
     return (
         <div>
             <PageHeader title="Add new model" lineWidth={100}/>
+
+            <Box w="100%" mb={8}>
+                <Alert />
+            </Box>
             
             <FormControl id="config-type" isRequired>
                 <FormLabel>Select Config Type</FormLabel>
@@ -23,7 +29,7 @@ const AddModel = () => {
             </FormControl>
 
             {
-                configType === "type1" ? <ConfigModelOne /> : <p>ConfigModel2</p>
+                configType === "type1" ? <ConfigModelOne /> : <ConfigModelTwo />
             }
         </div>
     )

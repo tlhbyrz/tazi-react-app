@@ -15,12 +15,19 @@ import {
     Flex,
     Spacer,
     Box,
-    Button
+    Button,
+    useToast 
   } from "@chakra-ui/react"
 import { useHistory } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { addNewModel } from 'store/actions/modelsActions'
+import { ConfigType } from 'data/constants'
 
 const ConfigModelOne = () => {
+    const dispatch = useDispatch()
     const history = useHistory()
+    const toast = useToast()
+
     const [name, setName] = useState("")
     const [param1, setParam1] = useState("")
     const [param2, setParam2] = useState("5")
@@ -34,7 +41,7 @@ const ConfigModelOne = () => {
 
     function addModel(){
         const configModel = {
-            type: "type1",
+            type: ConfigType.Type1,
             name: name,
             slug: name.toLowerCase().replaceAll(" ", "-"),
             schema: {
@@ -53,7 +60,7 @@ const ConfigModelOne = () => {
                 }
             }
         }
-        console.log("added", configModel);
+        dispatch(addNewModel(configModel, toast, history))
     }
 
     return (
@@ -65,7 +72,7 @@ const ConfigModelOne = () => {
                     <FormHelperText>We will use to identify models.</FormHelperText>
                 </FormControl>
 
-                <div className="form-control-section">
+                <div className="form-control-section section-padding-vertical">
                     <FormLabel>Namespace1</FormLabel>
                     <div className="section-padding-left">
                         <FormLabel>- Sub Namespace1</FormLabel>

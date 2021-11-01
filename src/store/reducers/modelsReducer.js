@@ -1,9 +1,9 @@
-import { ADD_NEW_MODEL, EDIT_MODEL, DELETE_MODEL } from "../types";
+import { ADD_NEW_MODEL, EDIT_MODEL, DELETE_MODEL, SET_MODELS_ERROR } from "../types";
 
 
 const initialState = {
     models: [],
-    activeModel: null,
+    errors: [],
     page: 0
 }
 
@@ -12,7 +12,13 @@ export const modelReducer = (state = initialState, action) => {
         case ADD_NEW_MODEL:
             return {
                 ...state,
-                models: [action.payload ,...state.models]
+                models: [...state.models, action.payload],
+                errors: []
+            }
+        case SET_MODELS_ERROR:
+            return {
+                ...state,
+                errors: action.payload
             }
         default:
             return state

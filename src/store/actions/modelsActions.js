@@ -1,16 +1,67 @@
 import { ADD_NEW_MODEL, EDIT_MODEL, DELETE_MODEL, SET_MODELS_ERROR } from "../types";
+import { MAX_NUMBER_OF_SAME_TYPE, ConfigType } from "data/constants";
 
-export const addNewModel = ( item ) => async (dispatch) => {
+export const addNewModel = ( item, toast, history ) => async (dispatch, getState) => {
+    const models = getState().modelsStore.models;
+    let errorList = [];
+    
     try {
-        dispatch({
-            type: ADD_NEW_MODEL,
-            payload: item
-        })
+        if(models.some(model => model.slug === item.slug)){
+            errorList.push("Model name must be unique!")
+            dispatch({
+                type: SET_MODELS_ERROR,
+                payload: errorList
+            })
+            return
+        }
+
+        if(item.type === ConfigType.Type1){
+            if(models.filter(model => model.type === ConfigType.Type1).length < MAX_NUMBER_OF_SAME_TYPE){
+                dispatch({
+                    type: ADD_NEW_MODEL,
+                    payload: item
+                })
+                toast({
+                    title: `${item.name} successfully added!`,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom"
+                  })
+                history.push("/")
+            }else{
+                errorList.push("You can not have more than 5 models of type1!")
+            }
+        }else if(item.type === ConfigType.Type2){
+            if(models.filter(model => model.type === ConfigType.Type2).length < MAX_NUMBER_OF_SAME_TYPE){
+                dispatch({
+                    type: ADD_NEW_MODEL,
+                    payload: item
+                })
+                toast({
+                    title: `${item.name} successfully added!`,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom"
+                  })
+                history.push("/")
+            }else{
+                errorList.push("You can not have more than 5 models of type2!")
+            }
+        }
+
+        if(errorList.length > 0){
+            dispatch({
+                type: SET_MODELS_ERROR,
+                payload: errorList
+            })
+        }
 
     } catch (error) {
         dispatch({
             type: SET_MODELS_ERROR,
-            payload: error.message
+            payload: [`${error.message}`]
         })
     }
 }
