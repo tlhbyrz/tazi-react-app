@@ -5,4 +5,9 @@ export const ConfigType = {
     Type2: "type2"
 }
 
+export const ComponentMode = {
+    Edit: "Edit",
+    Add: "Add"
+}
+
 export const MAX_NUMBER_OF_SAME_TYPE = 5;

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import "./ModelsList.css"
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
 import { Alert, AlertIcon, IconButton, Tag, useToast } from "@chakra-ui/react"
 import { ConfigType } from 'data/constants'
 import { deleteModel } from 'store/actions/modelsActions'
@@ -9,6 +10,8 @@ import AlertDialog from 'components/AlertDialog'
 const ModelsList = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [item, setItem] = useState(null)
+
+    const history = useHistory()
     const toast = useToast()
     const dispatch = useDispatch()
     const { models } = useSelector(state => state.modelsStore);
@@ -25,6 +28,10 @@ const ModelsList = () => {
     function handleDelete(item){
         dispatch(deleteModel(item, toast))
         onClose()
+    }
+
+    function gotoEditPage(item){
+        history.push(`/edit/${item.slug}`)
     }
 
     return (
@@ -46,7 +53,7 @@ const ModelsList = () => {
                                         <Tag colorScheme={`${item.type === ConfigType.Type1 ? "teal" : "red"}`}>{item.type}</Tag>
                                     </div>
                                     <div className="model-actions">
-                                        <IconButton icon={ <box-icon name='edit' type='solid' ></box-icon> } isRound={true} />
+                                        <IconButton icon={ <box-icon name='edit' type='solid' ></box-icon> } isRound={true} onClick={() => gotoEditPage(item)} />
                                         <IconButton icon={ <box-icon type='solid' name='trash'></box-icon> } isRound={true} onClick={() => confirmDelete(item)} />
                                     </div>
                                 </div>

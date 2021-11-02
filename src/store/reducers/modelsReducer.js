@@ -3,8 +3,7 @@ import { ADD_NEW_MODEL, EDIT_MODEL, DELETE_MODEL, SET_MODELS_ERROR } from "../ty
 
 const initialState = {
     models: [],
-    errors: [],
-    page: 0
+    errors: []
 }
 
 export const modelReducer = (state = initialState, action) => {
@@ -13,6 +12,12 @@ export const modelReducer = (state = initialState, action) => {
             return {
                 ...state,
                 models: [...state.models, action.payload],
+                errors: []
+            }
+        case EDIT_MODEL:
+            return {
+                ...state,
+                models: state.models.map(item => item.slug === action.payload.slug ? action.payload : item),
                 errors: []
             }
         case DELETE_MODEL:

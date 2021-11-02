@@ -33,3 +33,10 @@ box-icon{
     width: 20px;
     height: 20px;
 }
+
+@media screen and (max-width: 768px){
+    .models-list-section{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+}

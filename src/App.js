@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Layout from "components/Layout/Layout";
 import ModelsPage from "pages/ModelsPage";
 import AddModelPage from "pages/AddModelPage";
+import EditModelPage from "pages/EditModelPage";
 
 function App() {
   return (
@@ -25,6 +26,11 @@ function App() {
             <Route path="/add" exact>
               <Layout title="Tazi.ai | Add Model">
                 <AddModelPage />
+              </Layout>
+            </Route>
+            <Route path="/edit/:slug" exact>
+              <Layout title="Tazi.ai | Edit Model">
+                <EditModelPage />
               </Layout>
             </Route>
           </Switch>

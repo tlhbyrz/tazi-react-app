@@ -20,26 +20,26 @@ import {
   } from "@chakra-ui/react"
 import { useHistory } from 'react-router'
 import { useDispatch } from 'react-redux'
-import { addNewModel } from 'store/actions/modelsActions'
-import { ConfigType } from 'data/constants'
+import { addNewModel, editModel } from 'store/actions/modelsActions'
+import { ComponentMode, ConfigType } from 'data/constants'
 
-const ConfigModelOne = () => {
+const ConfigModelOne = ({ mode, model }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const toast = useToast()
 
-    const [name, setName] = useState("")
-    const [param1, setParam1] = useState("")
-    const [param2, setParam2] = useState("5")
-    const [param3, setParam3] = useState(false)
-    const [param4, setParam4] = useState("-2")
-    const [param8, setParam8] = useState("")
+    const [name, setName] = useState(mode === ComponentMode.Edit ? (model.name ?? "") : "")
+    const [param1, setParam1] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace1.subNameSpace1.parameter1 ?? "") : "")
+    const [param2, setParam2] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace1.subNameSpace1.parameter2 ?? "5") : "5")
+    const [param3, setParam3] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace1.parameter3 ?? false) : false)
+    const [param4, setParam4] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace2.subNameSpace2.parameter4 ?? "-2") : "-2")
+    const [param8, setParam8] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace2.parameter8 ?? "") : "")
 
     function gotoHome(){
         history.push("/")
     }
 
-    function addModel(){
+    function sendModel(){
         const configModel = {
             type: ConfigType.Type1,
             name: name,
@@ -60,7 +60,12 @@ const ConfigModelOne = () => {
                 }
             }
         }
-        dispatch(addNewModel(configModel, toast, history))
+
+        if(mode === ComponentMode.Edit){
+            dispatch(editModel(configModel, toast, history))
+        }else{
+            dispatch(addNewModel(configModel, toast, history))
+        }
     }
 
     return (
@@ -68,7 +73,7 @@ const ConfigModelOne = () => {
             <form>
                 <FormControl id="schema-name" isRequired className="form-control-section">
                     <FormLabel>Config Schema Name</FormLabel>
-                    <Input variant="filled" type="text" value={name} onChange={e => setName(e.target.value)}/>
+                    <Input isDisabled={mode === ComponentMode.Edit} variant="filled" type="text" value={name} onChange={e => setName(e.target.value)}/>
                     <FormHelperText>We will use to identify models.</FormHelperText>
                 </FormControl>
 
@@ -98,7 +103,7 @@ const ConfigModelOne = () => {
                             <FormLabel htmlFor="namespace1-param3" mb="0">
                                 - parameter3
                             </FormLabel>
-                            <Switch value={param3} onChange={e => setParam3(e.target.checked)} id="namespace1-param3" />
+                            <Switch isChecked={param3} onChange={e => setParam3(e.target.checked)} id="namespace1-param3" />
                         </FormControl> 
                     </div>
                 </div>
@@ -131,11 +136,15 @@ const ConfigModelOne = () => {
                 <Spacer />
                 <Box>
                     <Button colorScheme="red" mr="3" onClick={gotoHome}>Cancel</Button>
-                    <Button colorScheme="green" onClick={addModel}>Add</Button>
+                    <Button colorScheme="green" onClick={sendModel}>{ mode === ComponentMode.Edit ? "Save" : "Add" }</Button>
                 </Box>
             </Flex>
         </section>
     )
+}
+
+ConfigModelOne.defaultProps = {
+    mode: ComponentMode.Add
 }
 
 export default ConfigModelOne

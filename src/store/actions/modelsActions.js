@@ -3,6 +3,7 @@ import { MAX_NUMBER_OF_SAME_TYPE, ConfigType } from "data/constants";
 
 
 
+
 export const deleteModel = ( item, toast ) => async (dispatch) => {
     try {
         dispatch({
@@ -81,6 +82,31 @@ export const addNewModel = ( item, toast, history ) => async (dispatch, getState
                 payload: errorList
             })
         }
+
+    } catch (error) {
+        dispatch({
+            type: SET_MODELS_ERROR,
+            payload: [`${error.message}`]
+        })
+    }
+}
+
+
+
+export const editModel = ( item, toast, history ) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: EDIT_MODEL,
+            payload: item
+        })
+        toast({
+            title: `Your changes successfully saved!`,
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom"
+          })
+        history.push("/")
 
     } catch (error) {
         dispatch({

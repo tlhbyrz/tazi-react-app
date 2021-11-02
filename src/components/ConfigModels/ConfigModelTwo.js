@@ -21,21 +21,21 @@ import {
   } from "@chakra-ui/react"
 import { useHistory } from 'react-router'
 import { useDispatch } from 'react-redux'
-import { addNewModel } from 'store/actions/modelsActions'
-import { ConfigType } from 'data/constants'
+import { addNewModel, editModel } from 'store/actions/modelsActions'
+import { ComponentMode, ConfigType } from 'data/constants'
 
-const ConfigModelTwo = () => {
+const ConfigModelTwo = ({ mode, model }) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const toast = useToast()
 
-    const [name, setName] = useState("")
-    const [param10, setParam10] = useState(null)
-    const [param14, setParam14] = useState(true)
-    const [param15, setParam15] = useState("0.35")
-    const [param16, setParam16] = useState("0.7")
-    const [param17, setParam17] = useState("")
-    const [param18, setParam18] = useState("0")
+    const [name, setName] = useState(mode === ComponentMode.Edit ? (model.name ?? "") : "")
+    const [param10, setParam10] = useState(mode === ComponentMode.Edit ? (model.schema.parameter10 ?? null) : null)
+    const [param14, setParam14] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace3.subNameSpace4.parameter14 ?? true) : true)
+    const [param15, setParam15] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace3.subNameSpace4.parameter15 ?? "0.35") : "0.35")
+    const [param16, setParam16] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace3.subNameSpace5.subNameSpace6.parameter16 ?? "0.7") : "0.7")
+    const [param17, setParam17] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace3.subNameSpace5.subNameSpace6.parameter17 ?? "") : "")
+    const [param18, setParam18] = useState(mode === ComponentMode.Edit ? (model.schema.nameSpace3.parameter18 ?? "0") : "0")
 
     function gotoHome(){
         history.push("/")
@@ -45,7 +45,7 @@ const ConfigModelTwo = () => {
         setParam10(e.target.value);
     }
 
-    function addModel(){
+    function sendModel(){
         const configModel = {
             type: ConfigType.Type2,
             name: name,
@@ -67,7 +67,12 @@ const ConfigModelTwo = () => {
                 }
             }
         }
-        dispatch(addNewModel(configModel, toast, history))
+        
+        if(mode === ComponentMode.Edit){
+            dispatch(editModel(configModel, toast, history))
+        }else{
+            dispatch(addNewModel(configModel, toast, history))
+        }
     }
 
     return (
@@ -75,13 +80,13 @@ const ConfigModelTwo = () => {
             <form>
                 <FormControl id="schema-name" isRequired className="form-control-section">
                     <FormLabel>Config Schema Name</FormLabel>
-                    <Input variant="filled" type="text" value={name} onChange={e => setName(e.target.value)}/>
+                    <Input isDisabled={mode === ComponentMode.Edit} variant="filled" type="text" value={name} onChange={e => setName(e.target.value)}/>
                     <FormHelperText>We will use to identify models.</FormHelperText>
                 </FormControl>
 
                 <FormControl id="config-type" isRequired className="section-padding-vertical">
                     <FormLabel>parameter10</FormLabel>
-                    <Select variant="filled" onChange={handleConfigType} placeholder="Select option">
+                    <Select value={param10 ? param10 : ""} variant="filled" onChange={handleConfigType} placeholder="Select option">
                         <option value="option1">option1</option>
                         <option value="option2">option2</option>
                         <option value="option3">option3</option>
@@ -97,7 +102,7 @@ const ConfigModelTwo = () => {
                                 <FormLabel htmlFor="namespace3-param14" mb="0">
                                     parameter14
                                 </FormLabel>
-                                <Switch value={param14} onChange={e => setParam14(e.target.checked)} id="namespace4-param14" />
+                                <Switch isChecked={param14} onChange={e => setParam14(e.target.checked)} id="namespace4-param14" />
                             </FormControl> 
 
                             <FormControl id="schema-param15" className="section-padding-vertical">
@@ -152,11 +157,16 @@ const ConfigModelTwo = () => {
                 <Spacer />
                 <Box>
                     <Button colorScheme="red" mr="3" onClick={gotoHome}>Cancel</Button>
-                    <Button colorScheme="green" onClick={addModel}>Add</Button>
+                    <Button colorScheme="green" onClick={sendModel}>{ mode === ComponentMode.Edit ? "Save" : "Add" }</Button>
                 </Box>
             </Flex>
         </section>
     )
+}
+
+
+ConfigModelTwo.defaultProps = {
+    mode: ComponentMode.Add
 }
 
 export default ConfigModelTwo
