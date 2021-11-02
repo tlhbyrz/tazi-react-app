@@ -3,8 +3,8 @@ import store from "./store/store"
 import { ChakraProvider } from "@chakra-ui/react"
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Layout from "components/Layout/Layout";
-import ModelList from "pages/ModelList";
-import AddModel from "pages/AddModel";
+import ModelsPage from "pages/ModelsPage";
+import AddModelPage from "pages/AddModelPage";
 
 function App() {
   return (
@@ -14,17 +14,17 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <Layout title="Tazi.ai">
-                <ModelList />
+                <ModelsPage />
               </Layout>
             </Route>
             <Route path="/models" exact>
               <Layout title="Tazi.ai | All Models">
-                <ModelList />
+                <ModelsPage />
               </Layout>
             </Route>
             <Route path="/add" exact>
               <Layout title="Tazi.ai | Add Model">
-                <AddModel />
+                <AddModelPage />
               </Layout>
             </Route>
           </Switch>

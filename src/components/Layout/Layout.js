@@ -6,12 +6,13 @@ import "./Layout.css"
 const Layout = ({ title, description, children }) => {
     return (
         <>
-            <Header />
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>{title}</title> 
                 <meta name="description" content={description} />
             </Helmet>
+            
+            <Header />
             <div className="container">
                 {children}
             </div>

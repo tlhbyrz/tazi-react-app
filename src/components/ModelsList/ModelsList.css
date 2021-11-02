@@ -1,0 +1,35 @@
+
+
+.models-list-section{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.config-model-box{
+    display: flex;
+    justify-content: space-between;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0px 5px 12px -12px rgba(0, 0, 0, 0.4);
+}
+
+.models-list-section h3{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.model-actions{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+box-icon{
+    width: 20px;
+    height: 20px;
+}

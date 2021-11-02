@@ -40,7 +40,8 @@
     font-size: 16px;
 }
 
-.action-btn{
+.action-btn a{
+    display: block;
     margin-left: 10px;
     background: var(--action-btn-bg);
     padding: 10px 16px;
@@ -53,7 +54,7 @@
     transition: .3s all ease;
 }
 
-.action-btn:hover{
+.action-btn a:hover{
     background: var(--action-btn-hover-bg);
 }
 

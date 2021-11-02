@@ -15,6 +15,12 @@ export const modelReducer = (state = initialState, action) => {
                 models: [...state.models, action.payload],
                 errors: []
             }
+        case DELETE_MODEL:
+            return {
+                ...state,
+                models: state.models.filter(item => item.slug !== action.payload),
+                errors: []
+            }
         case SET_MODELS_ERROR:
             return {
                 ...state,

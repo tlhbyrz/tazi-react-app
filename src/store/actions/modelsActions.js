@@ -1,6 +1,30 @@
 import { ADD_NEW_MODEL, EDIT_MODEL, DELETE_MODEL, SET_MODELS_ERROR } from "../types";
 import { MAX_NUMBER_OF_SAME_TYPE, ConfigType } from "data/constants";
 
+
+
+export const deleteModel = ( item, toast ) => async (dispatch) => {
+    try {
+        dispatch({
+            type: DELETE_MODEL,
+            payload: item.slug
+        })
+        toast({
+            title: `${item.name} successfully removed!`,
+            status: "info",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom"
+        })
+    } catch (error) {
+        dispatch({
+            type: SET_MODELS_ERROR,
+            payload: [`${error.message}`]
+        })
+    }
+}
+
+
 export const addNewModel = ( item, toast, history ) => async (dispatch, getState) => {
     const models = getState().modelsStore.models;
     let errorList = [];

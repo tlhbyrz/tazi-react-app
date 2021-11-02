@@ -13,6 +13,7 @@
   --action-btn-bg: #131397;
   --action-btn-hover-bg: #050597;
   --max-width: 900px;
+  --card-bg: #FFFAF0;
 }
 
 body {
@@ -26,6 +27,11 @@ body {
 
 html, body{
   height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 ul{
