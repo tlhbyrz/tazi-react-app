@@ -115,3 +115,11 @@ export const editModel = ( item, toast, history ) => async (dispatch, getState) 
         })
     }
 }
+
+
+export const setError = ( messages ) => async (dispatch, getState) => {
+    dispatch({
+        type: SET_MODELS_ERROR,
+        payload: messages
+    })
+}

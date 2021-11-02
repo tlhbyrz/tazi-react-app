@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./ConfigModels.css"
 import {
     FormControl,
@@ -20,7 +20,7 @@ import {
   } from "@chakra-ui/react"
 import { useHistory } from 'react-router'
 import { useDispatch } from 'react-redux'
-import { addNewModel, editModel } from 'store/actions/modelsActions'
+import { addNewModel, editModel, setError } from 'store/actions/modelsActions'
 import { ComponentMode, ConfigType } from 'data/constants'
 
 const ConfigModelOne = ({ mode, model }) => {
@@ -39,7 +39,24 @@ const ConfigModelOne = ({ mode, model }) => {
         history.push("/")
     }
 
+    useEffect(() => {
+        dispatch(setError([]))
+    }, [])
+
     function sendModel(){
+        let errors = [];
+
+        if(!param1){
+            errors.push("Param1 field is required!")
+        }
+        if(!name){
+            errors.push("Model name field is required!")
+        }
+        if(errors.length > 0){
+            dispatch(setError(errors))
+            return
+        }
+
         const configModel = {
             type: ConfigType.Type1,
             name: name,

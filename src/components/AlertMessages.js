@@ -13,7 +13,7 @@ const Alert = () => {
         <div>
             {
                 errors.map(item => (
-                    <A status="error">
+                    <A status="error" mb={2}>
                         <AlertIcon />
                         <AlertTitle mr={2}>{item}</AlertTitle>
                     </A>
